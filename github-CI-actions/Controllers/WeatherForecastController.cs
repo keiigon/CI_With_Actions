@@ -35,5 +35,11 @@ namespace github_CI_actions.Controllers
             })
             .ToArray();
         }
+
+        [HttpGet("api")]
+        public IActionResult HelloWebApi()
+        {
+            return Ok("Welcome to the new Api");
+        }
     }
 }
