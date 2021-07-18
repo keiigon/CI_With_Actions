@@ -40,9 +40,11 @@ namespace github_CI_actions
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "github_CI_actions v1"));
+               
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "github_CI_actions v1"));
 
             app.UseHttpsRedirection();
 
