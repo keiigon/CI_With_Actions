@@ -1,0 +1,24 @@
+name: continous integration and deployment
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code ✔
+        uses: actions/checkout@v2
+
+      - name: setup .Net 5 📐
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '5.0.x'
+
+      - name: restore dependencies 🛠
+        run: dotnet restore
+
+      - name: build application 🚀
+        run: dotnet build -c Release --no-restore
