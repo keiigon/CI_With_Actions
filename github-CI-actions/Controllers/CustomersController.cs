@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +14,12 @@ namespace github_CI_actions.Controllers
     public class CustomersController : ControllerBase
     {
         private readonly CustomerContext _context;
+        private readonly IConfiguration _configuration;
 
-        public CustomersController(CustomerContext context)
+        public CustomersController(CustomerContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
 
         [HttpGet]
@@ -28,6 +31,12 @@ namespace github_CI_actions.Controllers
             _context.Customers.Add(customer);
             await _context.SaveChangesAsync();
             return customer;
+        }
+
+        [HttpGet("settings")]
+        public IActionResult GetSettings()
+        {
+            return Ok(_configuration["ConnectionStrings:DefaultConnection"]);
         }
     }
 }
