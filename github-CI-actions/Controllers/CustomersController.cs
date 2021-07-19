@@ -14,12 +14,10 @@ namespace github_CI_actions.Controllers
     public class CustomersController : ControllerBase
     {
         private readonly CustomerContext _context;
-        private readonly IConfiguration _configuration;
 
-        public CustomersController(CustomerContext context, IConfiguration configuration)
+        public CustomersController(CustomerContext context)
         {
             _context = context;
-            _configuration = configuration;
         }
 
         [HttpGet]
@@ -34,9 +32,9 @@ namespace github_CI_actions.Controllers
         }
 
         [HttpGet("settings")]
-        public IActionResult GetSettings()
+        public IActionResult GetSettings([FromServices] IConfiguration configuration)
         {
-            return Ok(_configuration["ConnectionStrings:DefaultConnection"]);
+            return Ok(configuration["ConnectionStrings:DefaultConnection"]);
         }
     }
 }
