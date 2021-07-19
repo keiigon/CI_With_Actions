@@ -32,8 +32,14 @@ namespace github_CI_actions.Controllers
         }
 
         [HttpGet("settings")]
-        public IActionResult GetSettings([FromServices] IConfiguration configuration)
+        public async Task<IActionResult> GetSettings([FromServices] IConfiguration configuration)
         {
+            _context.Database.Migrate();
+
+            _context.Customers.Add(new Customer { CustomerName = "Tarek Iraqi" });
+            _context.Customers.Add(new Customer { CustomerName = "Ramy" });
+            await _context.SaveChangesAsync();
+
             return Ok(configuration["ConnectionStrings:DefaultConnection"]);
         }
     }
